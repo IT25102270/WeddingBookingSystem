@@ -128,7 +128,12 @@
     </div>
 
     <div class="mt-4 pt-3 border-top border-secondary border-opacity-25">
-      <a href="dashboard.jsp" class="btn btn-outline-light btn-custom px-4">← Back to Dashboard</a>
+      <%
+        // Check who is currently looking at the page
+        String currentRole = (String) session.getAttribute("userRole");
+        String returnPage = (currentRole != null && currentRole.equalsIgnoreCase("Admin")) ? "dashboard.jsp" : "userDashboard.jsp";
+      %>
+      <a href="<%= returnPage %>" class="btn btn-outline-light btn-custom px-4">← Back to Dashboard</a>
     </div>
   </div>
 </div>

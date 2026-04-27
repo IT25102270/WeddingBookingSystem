@@ -9,7 +9,8 @@ import java.util.List;
 public class FileHandler {
 
     // Universal paths so it works on any laptop
-    private static final String BASE_PATH = System.getProperty("user.home") + File.separator;
+    // Force the system to save directly to the new C: drive folder
+    private static final String BASE_PATH = "C:\\WeddingData\\";
     private static final String USER_FILE = BASE_PATH + "users.txt";
     private static final String VENDOR_FILE = BASE_PATH + "vendors.txt";
     private static final String VENUE_FILE = BASE_PATH + "venues.txt";
@@ -168,4 +169,23 @@ public class FileHandler {
         }
         return bookingList;
     }
+    public static String getUserRole(String email) {
+        // Now it uses your perfectly set up USER_FILE variable!
+        try (BufferedReader br = new BufferedReader(new FileReader(USER_FILE))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (line.contains(email)) {
+                    if (line.toLowerCase().contains("admin")) {
+                        return "Admin";
+                    } else {
+                        return "Couple";
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error finding role: " + e.getMessage());
+        }
+        return "Couple";
+    }
+
 }

@@ -1,4 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    // SECURITY CHECK: Only let Admins load this page
+    String role = (String) session.getAttribute("userRole");
+    if (role == null || !role.equalsIgnoreCase("Admin")) {
+        // Kick them back to the user dashboard
+        response.sendRedirect("userDashboard.jsp");
+        return; // This stops the rest of the HTML from loading!
+    }
+%>
 <!DOCTYPE html>
 <html>
 <head>

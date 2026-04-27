@@ -74,11 +74,15 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h2 class="fw-bold mb-0 text-primary">Registered Venues</h2>
-                <p class="text-light opacity-50 small mb-0">Manage all luxury hotels, halls, and destinations.</p>
+                <p class="text-light opacity-50 small mb-0">Explore our luxury hotels, halls, and destinations.</p>
             </div>
-            <a href="addVenue.jsp" class="btn btn-primary shadow btn-custom">+ Add New Venue</a>
-        </div>
 
+            <%-- ONLY SHOW THIS BUTTON TO ADMINS --%>
+            <% if ("Admin".equalsIgnoreCase((String) session.getAttribute("userRole"))) { %>
+            <a href="addVenue.jsp" class="btn btn-primary shadow btn-custom">+ Add New Venue</a>
+            <% } %>
+
+        </div>
         <div class="table-responsive" style="border-radius: 10px; overflow: hidden;">
             <table class="table glass-table table-borderless">
                 <thead>
@@ -121,7 +125,12 @@
         </div>
 
         <div class="mt-4 pt-3 border-top border-secondary border-opacity-25">
-            <a href="dashboard.jsp" class="btn btn-outline-light btn-custom px-4">← Back to Dashboard</a>
+            <%
+                // Check who is currently looking at the page
+                String currentRole = (String) session.getAttribute("userRole");
+                String returnPage = (currentRole != null && currentRole.equalsIgnoreCase("Admin")) ? "dashboard.jsp" : "userDashboard.jsp";
+            %>
+            <a href="<%= returnPage %>" class="btn btn-outline-light btn-custom px-4">← Back to Dashboard</a>
         </div>
     </div>
 </div>

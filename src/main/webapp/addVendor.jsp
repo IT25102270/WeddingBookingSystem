@@ -1,4 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    // SECURITY CHECK: Only let Admins load this page
+    String role = (String) session.getAttribute("userRole");
+    if (role == null || !role.equalsIgnoreCase("Admin")) {
+        // Kick them back to the user dashboard
+        response.sendRedirect("userDashboard.jsp");
+        return; // This stops the rest of the HTML from loading!
+    }
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,29 +40,33 @@
         <p class="text-light opacity-75">Add a new photographer, caterer, or decorator.</p>
     </div>
     <form action="AddVendorServlet" method="POST">
+
         <div class="mb-3">
             <label class="form-label small ms-1 fw-bold text-light opacity-75">Vendor / Business Name</label>
-            <input type="text" name="name" class="form-control" placeholder="e.g., Studio Max Photography" required>
+            <input type="text" name="vName" class="form-control" placeholder="e.g., Studio Max Photography" required>
         </div>
-        <div class="mb-4">
+
+        <div class="mb-3">
+            <label class="form-label small ms-1 fw-bold text-light opacity-75">Vendor Email</label>
+            <input type="email" name="vEmail" class="form-control" placeholder="contact@vendor.com" required>
+        </div>
+
+        <div class="mb-3">
             <label class="form-label small ms-1 fw-bold text-light opacity-75">Service Category</label>
-            <select name="serviceType" class="form-select" required>
+            <select name="vType" class="form-select" required>
                 <option value="" disabled selected>-- Select a Service --</option>
                 <option value="Photography">Photography & Videography</option>
                 <option value="Catering">Catering & Food</option>
                 <option value="Decoration">Floral & Decoration</option>
+                <option value="Music">Music & Entertainment</option>
             </select>
         </div>
-        <div class="row g-3 mb-5">
-            <div class="col-md-6">
-                <label class="form-label small ms-1 fw-bold text-light opacity-75">Contact Number</label>
-                <input type="text" name="contact" class="form-control" placeholder="07XXXXXXXX" required>
-            </div>
-            <div class="col-md-6">
-                <label class="form-label small ms-1 fw-bold text-light opacity-75">Base Rate (LKR)</label>
-                <input type="number" name="basePrice" class="form-control" placeholder="e.g., 150000" required>
-            </div>
+
+        <div class="mb-5">
+            <label class="form-label small ms-1 fw-bold text-light opacity-75">Base Rate (LKR)</label>
+            <input type="number" name="vPrice" class="form-control" placeholder="e.g., 150000" required>
         </div>
+
         <button type="submit" class="btn btn-info w-100 mb-3 shadow">Save Vendor Details</button>
         <a href="dashboard.jsp" class="btn btn-outline-light w-100 py-2">Cancel & Return</a>
     </form>

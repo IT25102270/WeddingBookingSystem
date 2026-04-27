@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/AddBookingServlet")
 public class AddBookingServlet extends HttpServlet {
@@ -30,9 +31,22 @@ public class AddBookingServlet extends HttpServlet {
         Booking newBooking = new Booking(bookingId, userEmail, venueId, vendorId, eventDate, status);
 
         // 4. Save it to the text file
+        // Inside your doPost method, find where you save the booking:
         if (FileHandler.saveBooking(newBooking)) {
-            response.sendRedirect("dashboard.jsp?bookingAdded=true");
+
+            // Check the session to see who is currently logged in
+            HttpSession session = request.getSession();
+            String role = (String) session.getAttribute("userRole");
+
+            // Route them to their proper dashboard
+            if (role != null && role.equalsIgnoreCase("Admin")) {
+                response.sendRedirect("dashboard.jsp?bookingAdded=true");
+            } else {
+                response.sendRedirect("userDashboard.jsp?bookingAdded=true");
+            }
+
         } else {
+            // If saving failed
             response.sendRedirect("addBooking.jsp?error=true");
         }
     }

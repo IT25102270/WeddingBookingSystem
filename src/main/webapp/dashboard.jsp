@@ -10,7 +10,7 @@
             background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)),
             url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1500&q=80') center/cover no-repeat fixed;
             color: white;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .navbar {
@@ -19,6 +19,7 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        /* Added color: white !important to guarantee text is readable */
         .dashboard-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(15px);
@@ -26,6 +27,7 @@
             border-radius: 20px;
             transition: all 0.3s ease;
             height: 100%;
+            color: white !important;
         }
 
         .dashboard-card:hover {
@@ -63,9 +65,9 @@
 
 <div class="container">
 
-    <div class="mb-5">
+    <div class="mb-5 text-white">
         <h1 class="fw-bold">Management Overview</h1>
-        <p class="text-light opacity-50">Monitor and organize every detail of the wedding journey.</p>
+        <p class="text-light opacity-75">Monitor and organize every detail of the wedding journey.</p>
     </div>
 
     <% if ("true".equals(request.getParameter("bookingAdded"))) { %>
@@ -76,37 +78,37 @@
 
     <div class="row g-4">
         <div class="col-md-4">
-            <div class="card dashboard-card p-4">
+            <div class="card dashboard-card text-white p-4">
                 <div class="icon-box">📅</div>
-                <h3 class="fw-bold">Bookings</h3>
-                <p class="text-light opacity-50 small mb-4">Coordinate couple schedules and event confirmations.</p>
+                <h3 class="fw-bold text-white">Bookings</h3>
+                <p class="text-light opacity-75 small mb-4">Coordinate couple schedules and event confirmations.</p>
                 <div class="mt-auto">
-                    <a href="addBooking.jsp" class="btn btn-success w-100 btn-action">Create New Booking</a>
-                    <a href="ViewBookingsServlet" class="btn btn-outline-light w-100 btn-action">View All Bookings</a>
+                    <a href="addBooking.jsp" class="btn btn-success w-100 btn-action shadow-sm">Create New Booking</a>
+                    <a href="ViewBookingsServlet" class="btn btn-outline-light w-100 btn-action shadow-sm">View All Bookings</a>
                 </div>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="card dashboard-card p-4 border-primary">
+            <div class="card dashboard-card text-white p-4">
                 <div class="icon-box">🏨</div>
-                <h3 class="fw-bold">Venues</h3>
-                <p class="text-light opacity-50 small mb-4">Manage banquet halls, hotels, and luxury locations.</p>
+                <h3 class="fw-bold text-white">Venues</h3>
+                <p class="text-light opacity-75 small mb-4">Manage banquet halls, hotels, and luxury locations.</p>
                 <div class="mt-auto">
-                    <a href="addVenue.jsp" class="btn btn-primary w-100 btn-action">Add New Venue</a>
-                    <a href="ViewVenuesServlet" class="btn btn-outline-light w-100 btn-action">View Registered Venues</a>
+                    <a href="addVenue.jsp" class="btn btn-primary w-100 btn-action shadow-sm">Add New Venue</a>
+                    <a href="ViewVenuesServlet" class="btn btn-outline-light w-100 btn-action shadow-sm">View Registered Venues</a>
                 </div>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="card dashboard-card p-4">
+            <div class="card dashboard-card text-white p-4">
                 <div class="icon-box">📷</div>
-                <h3 class="fw-bold">Vendors</h3>
-                <p class="text-light opacity-50 small mb-4">Oversee photographers, caterers, and decorators.</p>
+                <h3 class="fw-bold text-white">Vendors</h3>
+                <p class="text-light opacity-75 small mb-4">Oversee photographers, caterers, and decorators.</p>
                 <div class="mt-auto">
-                    <a href="addVendor.jsp" class="btn btn-info text-white w-100 btn-action">Add New Vendor</a>
-                    <a href="ViewVendorsServlet" class="btn btn-outline-light w-100 btn-action">View Vendor List</a>
+                    <a href="addVendor.jsp" class="btn btn-info text-dark w-100 btn-action shadow-sm">Add New Vendor</a>
+                    <a href="ViewVendorsServlet" class="btn btn-outline-light w-100 btn-action shadow-sm">View Vendor List</a>
                 </div>
             </div>
         </div>
