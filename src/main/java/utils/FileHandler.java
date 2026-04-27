@@ -12,7 +12,7 @@ public class FileHandler {
     private static final String BASE_PATH = System.getProperty("user.home") + File.separator;
     private static final String USER_FILE = BASE_PATH + "users.txt";
     private static final String VENDOR_FILE = BASE_PATH + "vendors.txt";
-
+    private static final String VENUE_FILE = BASE_PATH + "venues.txt";
     /**
      * Saves any User object (Couple/Admin) to the text file.
      */
@@ -88,5 +88,44 @@ public class FileHandler {
             e.printStackTrace();
         }
         return vendorList;
+    }
+    /**
+     * Member 3 "Create" Operation: Saves a Venue to the text file.
+     */
+    public static boolean saveVenue(models.Venue venue) {
+        try (FileWriter fw = new FileWriter(VENUE_FILE, true);
+             PrintWriter pw = new PrintWriter(fw)) {
+
+            pw.println(venue.toFileString());
+            return true;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Member 3 "Read" Operation: Gets all venues from the text file.
+     */
+    public static List<models.Venue> getAllVenues() {
+        List<models.Venue> venueList = new ArrayList<>();
+        File file = new File(VENUE_FILE);
+
+        if (!file.exists()) return venueList;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(",");
+                if (data.length >= 5) {
+                    models.Venue v = new models.Venue(data[0], data[1], data[2], Integer.parseInt(data[3]), Double.parseDouble(data[4]));
+                    venueList.add(v);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return venueList;
     }
 }
