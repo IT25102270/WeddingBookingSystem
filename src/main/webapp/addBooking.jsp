@@ -132,7 +132,12 @@
         </div>
 
         <button type="submit" class="btn btn-success w-100 mb-3">Confirm Reservation</button>
-        <a href="dashboard.jsp" class="btn btn-outline-light w-100 py-2">Cancel & Return</a>
+        <%
+            // Check who is currently looking at the form
+            String currentRole = (String) session.getAttribute("userRole");
+            String cancelUrl = (currentRole != null && currentRole.equalsIgnoreCase("Admin")) ? "dashboard.jsp" : "userDashboard.jsp";
+        %>
+        <a href="<%= cancelUrl %>" class="btn btn-outline-light w-100 py-2">Cancel & Return</a>
     </form>
 </div>
 

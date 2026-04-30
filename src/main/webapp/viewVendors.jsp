@@ -1,6 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="models.Vendor" %>
+<%
+    // Check who is viewing the page
+    String role = (String) session.getAttribute("userRole");
+    boolean isAdmin = "Admin".equalsIgnoreCase(role);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,6 +52,10 @@
                     <th>Vendor / Business Name</th>
                     <th>Service Category</th>
                     <th>Base Rate (LKR)</th>
+                    <%-- Only render the Actions column header for Admins --%>
+                    <% if (isAdmin) { %>
+                    <th>Actions</th>
+                    <% } %>
                 </tr>
                 </thead>
                 <tbody>
@@ -59,13 +68,25 @@
                     <td class="fw-bold text-white"><%= v.getName() %></td>
                     <td><span class="badge glass-badge-info rounded-pill px-3 py-2"><%= v.getServiceType() %></span></td>
                     <td class="fw-bold">Rs. <%= String.format("%,.2f", v.getBasePrice()) %></td>
+
+                    <%-- Only render the Action buttons for Admins --%>
+                    <% if (isAdmin) { %>
+                    <td>
+                        <a href="editVendor.jsp?id=<%= v.getId() %>" class="btn btn-sm btn-outline-warning mb-1">Edit</a>
+                        <form action="DeleteVendorServlet" method="POST" style="display:inline;">
+                            <input type="hidden" name="vendorId" value="<%= v.getId() %>">
+                            <button type="submit" class="btn btn-sm btn-outline-danger mb-1" onclick="return confirm('Delete this completely?');">Delete</button>
+                        </form>
+                    </td>
+                    <% } %>
+
                 </tr>
                 <%
                     }
                 } else {
                 %>
                 <tr>
-                    <td colspan="3" class="text-center text-light opacity-50 py-5">
+                    <td colspan="<%= isAdmin ? 4 : 3 %>" class="text-center text-light opacity-50 py-5">
                         <div class="fs-1 mb-2">📷</div>
                         No vendors registered yet. Start building your service network!
                     </td>

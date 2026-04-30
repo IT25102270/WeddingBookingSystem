@@ -42,6 +42,7 @@
 </head>
 <body>
 
+<!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark mb-5 px-4">
   <div class="container">
     <a class="navbar-brand fw-bold fs-3" href="userDashboard.jsp">💍 DreamWedding.</a>
@@ -58,14 +59,25 @@
     <h1 class="fw-bold display-5">Plan Your Perfect Day</h1>
     <p class="text-light opacity-75 fs-5">Browse top-tier vendors, luxury venues, and manage your reservations.</p>
   </div>
+
+  <!-- Success Alerts -->
   <% if ("true".equals(request.getParameter("bookingAdded"))) { %>
   <div class="alert alert-success border-0 shadow-lg text-white mb-4" style="background: rgba(25, 135, 84, 0.3); backdrop-filter: blur(10px);">
     <strong>✨ Success!</strong> Your wedding booking has been confirmed.
   </div>
   <% } %>
-  <div class="row g-4 justify-content-center">
 
-    <div class="col-md-4">
+  <% if ("true".equals(request.getParameter("reviewAdded"))) { %>
+  <div class="alert alert-warning border-0 shadow-lg mb-4 text-dark" style="background: rgba(255, 193, 7, 0.9); backdrop-filter: blur(10px);">
+    <strong>⭐ Thank You!</strong> Your review has been successfully published.
+  </div>
+  <% } %>
+
+  <!-- 4-Column Layout -->
+  <div class="row g-4 justify-content-center pb-5">
+
+    <!-- My Bookings -->
+    <div class="col-md-6 col-lg-3">
       <div class="card dashboard-card text-center p-4">
         <div class="icon-box">📅</div>
         <h3 class="fw-bold text-white">My Bookings</h3>
@@ -76,7 +88,8 @@
       </div>
     </div>
 
-    <div class="col-md-4">
+    <!-- Explore Venues -->
+    <div class="col-md-6 col-lg-3">
       <div class="card dashboard-card text-center p-4">
         <div class="icon-box">🏨</div>
         <h3 class="fw-bold text-white">Explore Venues</h3>
@@ -87,7 +100,8 @@
       </div>
     </div>
 
-    <div class="col-md-4">
+    <!-- Find Vendors -->
+    <div class="col-md-6 col-lg-3">
       <div class="card dashboard-card text-center p-4">
         <div class="icon-box">📷</div>
         <h3 class="fw-bold text-white">Find Vendors</h3>
@@ -97,6 +111,19 @@
         </div>
       </div>
     </div>
+
+    <!-- NEW: Community Reviews -->
+    <div class="col-md-6 col-lg-3">
+      <div class="card dashboard-card text-center p-4">
+        <div class="icon-box">⭐</div>
+        <h3 class="fw-bold text-white">Reviews</h3>
+        <p class="text-light opacity-75 small mb-4">Read feedback from other couples or share your own experience.</p>
+        <div class="mt-auto">
+          <a href="ViewReviewsServlet" class="btn btn-warning text-dark w-100 btn-action shadow-sm fw-bold">Community Reviews</a>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 

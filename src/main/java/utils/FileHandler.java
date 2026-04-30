@@ -15,6 +15,7 @@ public class FileHandler {
     private static final String VENDOR_FILE = BASE_PATH + "vendors.txt";
     private static final String VENUE_FILE = BASE_PATH + "venues.txt";
     private static final String BOOKING_FILE = BASE_PATH + "bookings.txt";
+    private static final String REVIEW_FILE = BASE_PATH + "reviews.txt";
     /**
      * Saves any User object (Couple/Admin) to the text file.
      */
@@ -186,6 +187,130 @@ public class FileHandler {
             System.out.println("Error finding role: " + e.getMessage());
         }
         return "Couple";
+    }
+    /**
+     * Saves a Review object to the reviews text file.
+     */
+    public static boolean saveReview(models.Review review) {
+        try (java.io.FileWriter fw = new java.io.FileWriter(REVIEW_FILE, true);
+             java.io.PrintWriter pw = new java.io.PrintWriter(fw)) {
+
+            pw.println(review.toFileString());
+            return true;
+
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    /**
+     * Reads the reviews text file and returns a list of all Review objects.
+     */
+    public static java.util.List<models.Review> getAllReviews() {
+        java.util.List<models.Review> reviews = new java.util.ArrayList<>();
+        System.out.println("Trying to read from: " + REVIEW_FILE);
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(REVIEW_FILE))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(",");
+                // Ensure we have exactly 5 pieces of data (ID, Email, Target, Rating, Comment)
+                if (data.length == 5) {
+                    models.Review review = new models.Review(data[0], data[1], data[2], Integer.parseInt(data[3]), data[4]);
+                    reviews.add(review);
+                }
+            }
+        } catch (java.io.IOException e) {
+            // It's perfectly fine if the file doesn't exist yet!
+            System.out.println("No reviews file found yet. Returning empty list.");
+        }
+        return reviews;
+    }
+    /**
+     * Deletes a review from the text file by its ID.
+     */
+    public static boolean deleteReview(String reviewId) {
+        java.util.List<models.Review> reviews = getAllReviews();
+        boolean isDeleted = false;
+
+        // Notice the 'false' here — it tells Java to overwrite the file instead of appending!
+        try (java.io.FileWriter fw = new java.io.FileWriter(REVIEW_FILE, false);
+             java.io.PrintWriter pw = new java.io.PrintWriter(fw)) {
+
+            for (models.Review r : reviews) {
+                if (r.getReviewId().equals(reviewId)) {
+                    isDeleted = true; // We found the spam! Skip writing this one.
+                } else {
+                    pw.println(r.toFileString()); // Keep the good ones
+                }
+            }
+            return isDeleted;
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    // ==========================================
+    // VENDOR UPDATE & DELETE LOGIC
+    // ==========================================
+
+    public static boolean deleteVendor(String vendorId) {
+        java.util.List<models.Vendor> vendors = getAllVendors(); // Assuming you have this!
+        boolean isDeleted = false;
+        try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter(VENDOR_FILE, false))) {
+            for (models.Vendor v : vendors) {
+                if (v.getId().equals(vendorId)) isDeleted = true;
+                else pw.println(v.toFileString());
+            }
+            return isDeleted;
+        } catch (java.io.IOException e) { return false; }
+    }
+
+    public static boolean updateVendor(models.Vendor updatedVendor) {
+        java.util.List<models.Vendor> vendors = getAllVendors();
+        boolean isUpdated = false;
+        try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter(VENDOR_FILE, false))) {
+            for (models.Vendor v : vendors) {
+                if (v.getId().equals(updatedVendor.getId())) {
+                    pw.println(updatedVendor.toFileString());
+                    isUpdated = true;
+                } else {
+                    pw.println(v.toFileString());
+                }
+            }
+            return isUpdated;
+        } catch (java.io.IOException e) { return false; }
+    }
+
+    // ==========================================
+    // VENUE UPDATE & DELETE LOGIC
+    // ==========================================
+
+    public static boolean deleteVenue(String venueId) {
+        java.util.List<models.Venue> venues = getAllVenues(); // Assuming you have this!
+        boolean isDeleted = false;
+        try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter(VENUE_FILE, false))) {
+            for (models.Venue v : venues) {
+                if (v.getVenueId().equals(venueId)) isDeleted = true;
+                else pw.println(v.toFileString());
+            }
+            return isDeleted;
+        } catch (java.io.IOException e) { return false; }
+    }
+
+    public static boolean updateVenue(models.Venue updatedVenue) {
+        java.util.List<models.Venue> venues = getAllVenues();
+        boolean isUpdated = false;
+        try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter(VENUE_FILE, false))) {
+            for (models.Venue v : venues) {
+                if (v.getVenueId().equals(updatedVenue.getVenueId())) {
+                    pw.println(updatedVenue.toFileString());
+                    isUpdated = true;
+                } else {
+                    pw.println(v.toFileString());
+                }
+            }
+            return isUpdated;
+        } catch (java.io.IOException e) { return false; }
     }
 
 }

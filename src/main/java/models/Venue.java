@@ -21,6 +21,10 @@ public class Venue {
     public String getLocation() { return location; }
     public int getMaxCapacity() { return maxCapacity; }
     public double getPricePerDay() { return pricePerDay; }
+    public void setName(String name) { this.name = name; }
+    public void setLocation(String location) { this.location = location; }
+    public void setMaxCapacity(int maxCapacity) { this.maxCapacity = maxCapacity; }
+    public void setPricePerDay(double pricePerDay) { this.pricePerDay = pricePerDay; }
 
     // Custom method to format the data for our text file
     public String toFileString() {

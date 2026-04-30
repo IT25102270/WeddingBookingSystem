@@ -76,44 +76,61 @@
     </div>
     <% } %>
 
-    <div class="row g-4">
-        <div class="col-md-4">
+    <!-- 4-Column Layout -->
+    <div class="row g-4 justify-content-center">
+
+        <!-- Bookings -->
+        <div class="col-md-6 col-lg-3">
             <div class="card dashboard-card text-white p-4">
                 <div class="icon-box">📅</div>
                 <h3 class="fw-bold text-white">Bookings</h3>
                 <p class="text-light opacity-75 small mb-4">Coordinate couple schedules and event confirmations.</p>
                 <div class="mt-auto">
-                    <a href="addBooking.jsp" class="btn btn-success w-100 btn-action shadow-sm">Create New Booking</a>
+                    <a href="addBooking.jsp" class="btn btn-success w-100 btn-action shadow-sm mb-2">Create New Booking</a>
                     <a href="ViewBookingsServlet" class="btn btn-outline-light w-100 btn-action shadow-sm">View All Bookings</a>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
+        <!-- Venues -->
+        <div class="col-md-6 col-lg-3">
             <div class="card dashboard-card text-white p-4">
                 <div class="icon-box">🏨</div>
                 <h3 class="fw-bold text-white">Venues</h3>
                 <p class="text-light opacity-75 small mb-4">Manage banquet halls, hotels, and luxury locations.</p>
                 <div class="mt-auto">
-                    <a href="addVenue.jsp" class="btn btn-primary w-100 btn-action shadow-sm">Add New Venue</a>
+                    <a href="addVenue.jsp" class="btn btn-primary w-100 btn-action shadow-sm mb-2">Add New Venue</a>
                     <a href="ViewVenuesServlet" class="btn btn-outline-light w-100 btn-action shadow-sm">View Registered Venues</a>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
+        <!-- Vendors -->
+        <div class="col-md-6 col-lg-3">
             <div class="card dashboard-card text-white p-4">
                 <div class="icon-box">📷</div>
                 <h3 class="fw-bold text-white">Vendors</h3>
                 <p class="text-light opacity-75 small mb-4">Oversee photographers, caterers, and decorators.</p>
                 <div class="mt-auto">
-                    <a href="addVendor.jsp" class="btn btn-info text-dark w-100 btn-action shadow-sm">Add New Vendor</a>
+                    <a href="addVendor.jsp" class="btn btn-info text-dark w-100 btn-action shadow-sm mb-2">Add New Vendor</a>
                     <a href="ViewVendorsServlet" class="btn btn-outline-light w-100 btn-action shadow-sm">View Vendor List</a>
                 </div>
             </div>
         </div>
+
+        <!-- NEW: Moderate Reviews -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card dashboard-card text-white p-4">
+                <div class="icon-box">⭐</div>
+                <h3 class="fw-bold text-white">Reviews</h3>
+                <p class="text-light opacity-75 small mb-4">Delete inappropriate or spam feedback to maintain quality.</p>
+                <div class="mt-auto">
+                    <a href="AdminModerationServlet" class="btn btn-danger w-100 btn-action shadow-sm">Moderate Reviews</a>
+                </div>
+            </div>
+        </div>
+
     </div>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
